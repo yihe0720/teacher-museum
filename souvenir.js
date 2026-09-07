@@ -32,7 +32,7 @@ export function drawTicket(canvas,visit){
  text('今天的足迹',80,435,24,'#785637');
  text(visit.rooms.map(i=>roomNames[i]).join('  ·  '),80,484,32);
  const books=visit.moments.filter(x=>x.startsWith('book:')).length;
- const memory=visit.moments.includes('drawer')?'还打开了那只藏着小秘密的抽屉。':books?'还从书架抽出了老师推荐的书。':visit.read.length?`在 ${visit.read.length} 件展品前，读过留下的文字。`:'在这座小馆里，留下了一次到访。';
+ const memory=visit.moments.includes('drawer')?'还打开了那只藏着民间评价的抽屉。':books?'还从书架抽出了老师推荐的书。':visit.read.length?`在 ${visit.read.length} 件展品前，读过留下的文字。`:'在这座小馆里，留下了一次到访。';
  text(memory,80,545,28,'#785637');
  c.beginPath();c.moveTo(82,593);c.lineTo(1057,593);c.stroke();
  text('永久馆藏 · 更新至2026',80,639,25,'#765236');text('策展人 逸',1057,639,25,'#765236',undefined,'right');
