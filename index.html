@@ -1,16 +1,41 @@
 <!doctype html>
 <html lang="zh-CN">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#e7ddc9"><meta name="description" content="风华，才识，温意，可爱。这里收藏的，是我眼中的您。教师节，献给何老师。"><title>致您 · 私人博物馆</title><link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css"></head>
-<body>
+<body class="awaiting-admission">
+<audio id="museum-audio" src="./assets/museum-music.mp3" preload="none" loop></audio>
+<button id="music-toggle" class="music-toggle" aria-label="播放背景音乐" aria-pressed="false"><span aria-hidden="true">♫</span><span id="music-label">音乐 · 关</span></button>
+<section id="admission" aria-label="时光博物馆入场门票">
+ <canvas id="ticket-stars" aria-hidden="true"></canvas>
+ <div class="ticket-orbit">
+  <p class="ticket-prelude">A LITTLE MUSEUM, JUST FOR YOU</p>
+  <div class="ticket" id="ticket">
+   <div class="ticket-main">
+    <div class="ticket-top"><span>PRIVATE COLLECTION</span><span>№ 0001</span></div>
+    <div class="ticket-title"><p>The Little Chronicles of</p><h1>Professor<br>He Zhaopeng</h1><span class="ticket-rule"></span><h2>Museum of Time</h2></div>
+    <p class="ticket-collection">永久馆藏 · 更新至2026</p>
+    <div class="ticket-facts"><span>馆藏对象：<b>1</b></span><span>累计观察年份：<b>4</b></span><span>策展人：<b>逸</b></span></div>
+    <div class="ticket-edition"><em>2026 TEACHERS’ DAY</em><span>2026教师节特别企划</span></div>
+   </div>
+   <button class="ticket-stub" id="admit" disabled aria-describedby="ticket-status">
+    <span class="stub-header">ADMIT ONE</span><span class="stub-mark" aria-hidden="true">H</span><strong>持票入馆</strong><span class="stub-valid">有效期限：<br>2022-forever</span><span class="stub-instruction">点此票根检票入馆</span><span class="stub-number">2022 — ∞</span>
+   </button>
+  </div>
+  <p id="ticket-status" aria-live="polite">展馆正在准备，请稍候…</p>
+ </div>
+ <div class="admission-light" aria-hidden="true"></div>
+</section>
+<div id="museum-ui" inert>
 <main id="museum" tabindex="0" aria-label="博物馆空间。拖动环顾，点击地面圆点移动。"></main><div class="veil" aria-hidden="true"></div><div id="transition" aria-hidden="true"></div>
 <header class="masthead"><a href="#" class="identity" id="home" aria-label="回到序厅"><span class="seal">H</span><span><b>致您</b><small>MUSÉE PRIVÉ</small></span></a><span class="dedication">教师节，献给何老师</span><nav class="utilities"><button id="map-open">展馆地图</button><button id="help" class="round" aria-label="操作帮助">?</button><button id="fullscreen" class="round" aria-label="全屏">⛶</button></nav></header>
 <nav id="room-index" aria-label="展厅导航"></nav><div id="markers" aria-label="观察点"></div>
 <div id="hint">拖动环顾 <span>·</span> 点击圆点走近 <span>·</span> 点击展品阅读</div>
-<footer class="bottom-ui"><section class="room-caption"><p class="eyebrow" id="room-kicker"></p><h1 id="room-title">致您</h1><p id="room-desc">这里收藏的，是我眼中的您。</p><button id="read-item" class="read-button">读序言 <span>↗</span></button></section><section class="navigation" aria-label="参观路线"><div class="mode-row"><span id="mode-label">自由漫游</span><button id="tour-toggle">按路线参观 →</button></div><div class="transport"><button id="previous" class="round" aria-label="上一站">←</button><div class="station"><small id="station-count"></small><span id="station-label"></span></div><button id="next" class="round" aria-label="下一站">→</button></div><div class="nav-bottom"><button id="reset-view">视角归正</button><button id="quiet">静赏</button><button id="map-open-bottom">换一厅</button></div></section></footer>
+<footer class="bottom-ui"><section class="room-caption"><p class="eyebrow" id="room-kicker"></p><h1 id="room-title">致您</h1><p id="room-desc">这里收藏的，是我眼中的您。</p><button id="read-item" class="read-button">读序言 <span>↗</span></button><button id="drawer-read" class="read-button secondary-action" hidden>阅读抽屉里的资料 ↗</button><div id="book-actions" hidden aria-label="抽取或放回书籍"></div></section><section id="ending-invitation" hidden aria-label="参观的最后一步"><p>离馆前，请收下这张纪念票。</p><button id="souvenir-open" class="keepsake-primary"><span id="ending-ticket-label">领取您的参观纪念票</span><span aria-hidden="true">↗</span></button><small>保存 PDF，为这次参观留念。</small></section><section class="navigation" aria-label="参观路线"><div class="mode-row"><span id="mode-label">自由漫游</span><button id="tour-toggle">按路线参观 →</button></div><div class="transport"><button id="previous" class="round" aria-label="上一站">←</button><div class="station"><small id="station-count"></small><span id="station-label"></span></div><button id="next" class="round" aria-label="下一站">→</button></div><div class="nav-bottom"><button id="reset-view">视角归正</button><button id="quiet">静赏</button><button id="map-open-bottom">换一厅</button></div></section></footer>
 <button id="exit-quiet" hidden>退出静赏</button><div id="status" class="sr-only" aria-live="polite"></div>
 <div id="loading"><span class="loading-seal">H</span><h2>致您</h2><p id="loading-note">正在打开这座私人博物馆</p><span id="loading-progress"></span><button id="retry" hidden>重新载入</button></div>
 <dialog id="map-dialog"><div class="dialog-heading"><div><span class="eyebrow">PLAN DU MUSÉE</span><h2>想去哪里看看？</h2></div><button class="close" aria-label="关闭">×</button></div><div id="floorplan"></div><p class="map-note">序厅 · 风华 · 才识 · 温意 · 可爱 · 终厅</p></dialog>
-<dialog id="detail-dialog"><div class="dialog-heading"><div><span class="eyebrow" id="detail-kicker"></span><h2 id="detail-title"></h2></div><button class="close" aria-label="关闭">×</button></div><div id="detail-body"><div class="detail-visual"><div id="object-stage" hidden aria-label="三维物件，拖动可旋转"></div><div id="detail-media"></div><button id="source-toggle" hidden>查看原始照片</button><p id="object-hint" hidden>拖动物件，换个角度看看</p></div><div class="detail-writing"><p id="detail-date"></p><div id="detail-text"></div><p id="detail-after"></p></div></div><div class="detail-footer"><span id="detail-location"></span><button id="detail-next">继续看 →</button></div></dialog>
-<dialog id="help-dialog"><div class="dialog-heading"><div><span class="eyebrow">PRENEZ VOTRE TEMPS</span><h2>慢慢看，不必赶路</h2></div><button class="close" aria-label="关闭">×</button></div><dl><dt>环顾</dt><dd>用一根手指或鼠标拖动画面；也可以按键盘方向键。</dd><dt>走近</dt><dd>点击地面圆点或展品前往观察点。再次点击展品，或按「读展签」，即可阅读。</dd><dt>按路线参观</dt><dd>按右箭头依次走过每件展品；参观不会自动前进，随时可以停下来。</dd><dt>档案抽屉</dt><dd>走到抽屉前，点击「拉开抽屉」。藏在里面的资料才会出现。</dd><dt>看实物</dt><dd>打开咖啡、水瓶、笔和奖杯的展签后，可以拖动物件旋转，另可查看原始照片。</dd><dt>随时换厅</dt><dd>地图可以直接换厅；Esc 关闭弹窗或退出静赏，Enter 进入路线的下一站。</dd></dl><label class="motion-option"><input type="checkbox" id="reduce-motion"> 减少镜头移动</label></dialog>
+<dialog id="detail-dialog"><div class="dialog-heading"><div><span class="eyebrow" id="detail-kicker"></span><h2 id="detail-title"></h2></div><button class="close" aria-label="关闭">×</button></div><div id="detail-body"><div class="detail-visual"><div id="object-stage" hidden aria-label="三维物件，拖动可旋转"></div><div id="detail-media"></div><button id="source-toggle" hidden>查看原始照片</button><p id="object-hint" hidden>拖动物件，换个角度看看</p></div><div class="detail-writing"><p id="detail-date"></p><div id="detail-text"></div><p id="detail-after"></p></div></div><div class="detail-footer"><span id="detail-location"></span><button id="souvenir-detail-open" class="keepsake-primary" hidden>最后，收下您的纪念票 ↗</button><button id="detail-next">继续看 →</button></div></dialog>
+<dialog id="souvenir-dialog" aria-labelledby="souvenir-title"><div class="dialog-heading"><div><span class="eyebrow" id="souvenir-kicker">A KEEPSAKE, FOR YOU</span><h2 id="souvenir-title">把这张票留下吧。</h2></div><button class="close" aria-label="关闭纪念票">×</button></div><div class="souvenir-paper"><canvas id="souvenir-canvas" role="img" aria-label="本次参观纪念票" aria-describedby="souvenir-summary"></canvas></div><p id="souvenir-summary" class="sr-only"></p><p id="visit-farewell" hidden role="status">这次参观，到这里就结束了。<br>谢谢您，来过这座小馆。</p><div class="souvenir-actions"><p id="souvenir-note" aria-live="polite">把今天的一次到访，轻轻收好。</p><button id="souvenir-save">保存 PDF，留下这次参观 ↓</button></div></dialog>
+<dialog id="help-dialog"><div class="dialog-heading"><div><span class="eyebrow">PRENEZ VOTRE TEMPS</span><h2>慢慢看，不必赶路</h2></div><button class="close" aria-label="关闭">×</button></div><dl><dt>环顾</dt><dd>用一根手指或鼠标拖动画面；也可以按键盘方向键。</dd><dt>走近</dt><dd>点击地面圆点或展品前往观察点。再次点击展品，或按「读展签」，即可阅读。</dd><dt>按路线参观</dt><dd>按右箭头依次走过每件展品；参观不会自动前进，随时可以停下来。</dd><dt>档案抽屉</dt><dd>走到抽屉前，点击拉开，再点一次收回。打开后可另按「阅读抽屉里的资料」。</dd><dt>书架</dt><dd>走近「老师推荐我看的书」，点击书或书名即可抽出、放回；「读展签」查看原始照片。</dd><dt>背景音乐</dt><dd>右上角音乐按钮控制播放与暂停。换厅时音乐会继续。</dd><dt>看实物</dt><dd>打开咖啡、水瓶、笔、吉他和奖杯的展签后，可以拖动物件旋转，另可查看原始照片。</dd><dt>随时换厅</dt><dd>地图可以直接换厅；Esc 关闭弹窗或退出静赏，Enter 进入路线的下一站。</dd></dl><label class="motion-option"><input type="checkbox" id="reduce-motion"> 减少镜头移动</label></dialog>
+</div>
 <script type="module" src="./app.js"></script>
 </body></html>
